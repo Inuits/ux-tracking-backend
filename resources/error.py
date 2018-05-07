@@ -1,5 +1,6 @@
-from flask_restful import Resource, reqparse, fields, marshal_with
-from resources.action import Action
+from flask_restful import Resource, reqparse, fields, http_status_message
+import logging
+import json
 
 error_fields = {
     'error': fields.String,
@@ -14,7 +15,14 @@ post_parser.add_argument('error', type=str)
 post_parser.add_argument('source', type=str)
 post_parser.add_argument('position', type=str)
 post_parser.add_argument('stack', type=str)
-post_parser.add_argument('actions')
+post_parser.add_argument('actions', type=str)
+
+
+logging.basicConfig(filename='debug.log',
+                    filemode='w',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 
 
 class Error(Resource):
@@ -26,22 +34,17 @@ class Error(Resource):
 
     def post(self):
         args = post_parser.parse_args()
+        actions = json.loads(args['actions'])
 
-        actions = args['actions']
         del args['actions']
 
         error = self.es.index('errors', 'error', args)
 
 
         results = []
-        # doc_type = {'_parent': {'type': 'errors', 'id': error['_id']}}
-        doc_type = {'_parent': {'id': error['_id']}}
         for action in actions:
-            action['doc_type'] = doc_type
             results.append(
-                self.es.index('actions', 'action', action)
-
-                # Action(es=self.es).post()
+                self.es.index('actions', 'action', action, parent=error['_id'])
             )
 
-        return results
+        return http_status_message(200)
