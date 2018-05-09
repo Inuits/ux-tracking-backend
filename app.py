@@ -30,6 +30,9 @@ es = Elasticsearch()
 app.config['JWT_SECRET_KEY'] = 'SUPERsecretAPPkeyFORjqueryLOGGER*'
 jwt = JWTManager(app)
 
+if not es.indices.exists('errors'):
+    es.indices.create('errors')
+
 # creating ES index for actions with parent (error)
 if not es.indices.exists('actions'):
     es.indices.create('actions')
