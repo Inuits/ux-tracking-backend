@@ -3,7 +3,7 @@ import logging
 from elasticsearch import Elasticsearch
 from flask import Flask, Blueprint
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required
 from flask_restful import Api
 
 from resources.action import Action
