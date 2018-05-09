@@ -13,8 +13,9 @@ class Application(object):
         self.key = key
 
 
+# TODO: refactor this to be config managed or behind KeyCloack
 apps = [
-    Application(1, 'sportoffice', 'sportoase')
+    Application(1, 'sportoffice', ';aslkjhf;adsljhy;oiubyhr')
 ]
 
 appsMap = {a.name: a for a in apps}
