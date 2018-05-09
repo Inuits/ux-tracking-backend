@@ -2,9 +2,9 @@ import logging
 
 from elasticsearch import Elasticsearch
 from flask import Flask, Blueprint
-from flask_jwt_extended import JWTManager, jwt_required
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 from flask_restful import Api
-from flask_restful.utils import cors
 
 from resources.action import Action
 from resources.auth import Auth
@@ -19,9 +19,11 @@ logging.basicConfig(filename='debug.log',
 
 # app initializion
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}}, support_credentials=True, automatic_options=True,
+     expose_headers=['Authorization'])
+app.config['CORS_HEADERS'] = 'Content-Type'
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
-api.decorators=[cors.crossdomain(origin='*')]
 es = Elasticsearch()
 
 # JWT

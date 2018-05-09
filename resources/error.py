@@ -1,5 +1,7 @@
 import json
+
 from flask_restful import Resource, reqparse, fields, http_status_message
+
 from app import jwt_required
 
 error_fields = {

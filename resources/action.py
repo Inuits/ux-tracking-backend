@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+
 from app import jwt_required
 
 post_parser = reqparse.RequestParser()
@@ -11,6 +12,7 @@ post_parser.add_argument('type', type=str)
 post_parser.add_argument('path', type=str)
 post_parser.add_argument('method', type=str)
 post_parser.add_argument('timestamp', type=int)
+
 
 class Action(Resource):
     def __init__(self, **kwargs):

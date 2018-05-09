@@ -19,6 +19,7 @@ apps = [
 
 appsMap = {a.name: a for a in apps}
 
+
 class Auth(Resource):
     def post(self):
         args = post_parser.parse_args()
