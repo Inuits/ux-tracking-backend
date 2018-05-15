@@ -18,6 +18,7 @@ post_parser.add_argument('source', type=str)
 post_parser.add_argument('position', type=str)
 post_parser.add_argument('stack', type=str)
 post_parser.add_argument('actions', type=str)
+post_parser.add_argument('timestamp', type=int)
 
 
 class Error(Resource):
@@ -26,7 +27,11 @@ class Error(Resource):
 
     @jwt_required
     def get(self):
-        return self.es.search('errors', 'error')['hits']['hits']
+        return self.es.search('errors', 'error', {
+            # 'sort': {
+            #     'timestamp': {'order': 'asc'}
+            # }
+        })['hits']['hits']
 
     @jwt_required
     def post(self):
@@ -37,10 +42,8 @@ class Error(Resource):
 
         error = self.es.index('errors', 'error', args)
 
-        results = []
         for action in actions:
-            results.append(
-                self.es.index('actions', 'action', action, parent=error['_id'])
-            )
+            action['error_id'] = error['_id']
+            self.es.index('actions', 'action', action)
 
         return http_status_message(200)

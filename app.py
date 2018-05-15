@@ -30,25 +30,10 @@ es = Elasticsearch()
 app.config['JWT_SECRET_KEY'] = 'SUPERsecretAPPkeyFORjqueryLOGGER*'
 jwt = JWTManager(app)
 
-if not es.indices.exists('errors'):
-    es.indices.create('errors')
-
-# creating ES index for actions with parent (error)
-if not es.indices.exists('actions'):
-    es.indices.create('actions')
-
-    es.indices.put_mapping(
-        index='actions', doc_type='action', body={
-            '_parent': {
-                'type': 'errors'
-            }
-        }
-    )
-
 # create the routes
 api.add_resource(Auth, '/auth')
 api.add_resource(Error, '/error', resource_class_kwargs={'es': es})
-api.add_resource(Action, '/action', resource_class_kwargs={'es': es})
+api.add_resource(Action, '/action', '/action/for/<string:error_id>', resource_class_kwargs={'es': es})
 
 # register blueprint
 app.register_blueprint(api_bp)

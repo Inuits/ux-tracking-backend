@@ -20,7 +20,20 @@ class Action(Resource):
 
     @jwt_required
     def get(self):
-        return {'hello': True}
+        return self.es.search('actions', 'action')['hits']['hits']
+
+    @jwt_required
+    def get(self, error_id):
+        return self.es.search('actions', 'action', {
+            'query': {
+                'match': {
+                    'error_id': error_id
+                }
+            },
+            'sort': {
+                'timestamp': { 'order': 'asc'}
+            }
+        })['hits']['hits']
 
     @jwt_required
     def post(self):
