@@ -1,8 +1,7 @@
 import json
 
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource, reqparse, fields, http_status_message
-
-from app import jwt_required
 
 error_fields = {
     'error': fields.String,
@@ -13,6 +12,8 @@ error_fields = {
 }
 
 post_parser = reqparse.RequestParser()
+post_parser.add_argument('client', type=str)
+post_parser.add_argument('session', type=str)
 post_parser.add_argument('error', type=str)
 post_parser.add_argument('source', type=str)
 post_parser.add_argument('position', type=str)
@@ -28,9 +29,9 @@ class Error(Resource):
     @jwt_required
     def get(self):
         return self.es.search('errors', 'error', {
-            # 'sort': {
-            #     'timestamp': {'order': 'asc'}
-            # }
+            'sort': {
+                'timestamp': {'order': 'desc'}
+            }
         })['hits']['hits']
 
     @jwt_required
