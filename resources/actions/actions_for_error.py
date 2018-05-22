@@ -16,5 +16,6 @@ class ActionsForError(Resource):
             },
             'sort': {
                 'timestamp': {'order': 'asc'}
-            }
+            },
+            'size': 100
         })['hits']['hits']

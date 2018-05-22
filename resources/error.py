@@ -28,11 +28,18 @@ class Error(Resource):
 
     @jwt_required
     def get(self):
-        return self.es.search('errors', 'error', {
-            'sort': {
-                'timestamp': {'order': 'desc'}
-            }
-        })['hits']['hits']
+        try:
+            errors = self.es.search('errors', 'error', {
+                'sort': {
+                    'timestamp': {'order': 'desc'}
+                },
+                'size': 100
+            })
+
+        except:
+            errors = []
+
+        return errors['hits']['hits'] if 'hits' in errors else []
 
     @jwt_required
     def post(self):

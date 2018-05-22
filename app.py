@@ -27,6 +27,12 @@ api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 es = Elasticsearch()
 
+if not es.indices.exists('errors'):
+    es.indices.create('errors')
+
+if not es.indices.exists('actions'):
+    es.indices.create('actions')
+
 # JWT
 app.config['JWT_SECRET_KEY'] = 'SUPERsecretAPPkeyFORjqueryLOGGER*'
 jwt = JWTManager(app)
