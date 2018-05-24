@@ -1,6 +1,8 @@
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
+from common.es_options import EsOptions
+
 
 class ActionsForError(Resource):
     def __init__(self, **kwargs):
@@ -8,14 +10,9 @@ class ActionsForError(Resource):
 
     @jwt_required
     def get(self, error_id):
-        return self.es.search('actions', 'action', {
-            'query': {
-                'match': {
-                    'error_id': error_id
-                }
-            },
-            'sort': {
-                'timestamp': {'order': 'asc'}
-            },
-            'size': 100
-        })['hits']['hits']
+        esOpts = EsOptions()
+        esOpts.addQuery('error_id', error_id)
+
+        actions = self.es.search('actions', 'action', esOpts.get())
+
+        return actions['hits'] if 'hits' in actions else []

@@ -3,6 +3,8 @@ import json
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource, reqparse, fields, http_status_message
 
+from common.es_options import EsOptions
+
 error_fields = {
     'error': fields.String,
     'source': fields.String,
@@ -28,18 +30,16 @@ class Error(Resource):
 
     @jwt_required
     def get(self):
+
+        esOpts = EsOptions()
+
         try:
-            errors = self.es.search('errors', 'error', {
-                'sort': {
-                    'timestamp': {'order': 'desc'}
-                },
-                'size': 100
-            })
+            errors = self.es.search('errors', 'error', esOpts.get())
 
         except:
             errors = []
 
-        return errors['hits']['hits'] if 'hits' in errors else []
+        return errors['hits'] if 'hits' in errors else []
 
     @jwt_required
     def post(self):
