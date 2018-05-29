@@ -31,5 +31,5 @@ class Auth(Resource):
             return http_status_message(401)
 
         return {
-            'access_token': create_access_token(identity=args.name)
+            'access_token': create_access_token(identity=args.name, expires_delta=False)
         }

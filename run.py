@@ -10,4 +10,4 @@ if __name__ == '__main__':
     handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
     CORS(app, resources={r"/*": {"origins": "*"}}, support_credentials=True)
-    app.run(debug=True, ssl_context=('./cert.pem', './key.pem'))
+    app.run(debug=True,  ssl_context=('./cert.pem', './key.pem'))

@@ -7,11 +7,13 @@ queryParser.add_argument('session', type=str, location='args')
 optsParser = reqparse.RequestParser()
 optsParser.add_argument('reverse', type=bool, location='args')
 
+
 class EsOptions(object):
 
     def __init__(self):
         self.esOpts = {}
         self.matches = {}
+        self.filters = {}
         self.setPaging()
 
         params = queryParser.parse_args()
@@ -47,10 +49,26 @@ class EsOptions(object):
         if not value is None:
             self.matches[key] = value
 
+    def addFilter(self, key, value: str):
+        if not value is None:
+            type = 'must_not' if value.startswith('!') else 'must'
+            self.__addKeyIfNotExists__(self.filters, type)
+            self.__addKeyIfNotExists__(self.filters[type], 'match')
+            self.filters[type]['match'][key] = value.replace('!', '')
+
+
     def get(self):
         if self.matches:
-            self.esOpts['query'] = {
-                'match': self.matches
-            }
+            self.__addKeyIfNotExists__(self.esOpts, 'query')
+            self.esOpts['query']['match'] = self.matches
+
+        if self.filters:
+            self.__addKeyIfNotExists__(self.esOpts, 'query')
+            self.__addKeyIfNotExists__(self.esOpts['query'], 'bool')
+            self.esOpts['query']['bool'] = self.filters
 
         return self.esOpts
+
+    def __addKeyIfNotExists__(self, dict: dict, key):
+        if not key in dict:
+            dict[key] = {}

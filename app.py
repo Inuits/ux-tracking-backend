@@ -7,7 +7,6 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
 from resources.actions.action import Action
-from resources.actions.actions_for_error import ActionsForError
 from resources.auth import Auth
 from resources.error import Error
 
@@ -38,7 +37,6 @@ jwt = JWTManager(app)
 api.add_resource(Auth, '/auth')
 api.add_resource(Error, '/error', resource_class_kwargs={'es': es})
 api.add_resource(Action, '/action', resource_class_kwargs={'es': es})
-api.add_resource(ActionsForError, '/action/for/<string:error_id>', resource_class_kwargs={'es': es})
 
 # register blueprint
 app.register_blueprint(api_bp)
