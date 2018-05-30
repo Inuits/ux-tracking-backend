@@ -7,7 +7,6 @@ from common.es_options import EsOptions
 parser = reqparse.RequestParser()
 parser.add_argument('actions', type=str)
 
-
 filterParser = reqparse.RequestParser()
 filterParser.add_argument('client', type=str)
 filterParser.add_argument('error_id', type=str)
@@ -19,6 +18,7 @@ filterParser.add_argument('session', type=str)
 filterParser.add_argument('type', type=str)
 filterParser.add_argument('value', type=str)
 
+
 class Action(Resource):
     def __init__(self, **kwargs):
         self.es = kwargs['es']
@@ -26,7 +26,7 @@ class Action(Resource):
 
     @jwt_required
     def get(self):
-        for key,value in filterParser.parse_args().items():
+        for key, value in filterParser.parse_args().items():
             self.esOpts.addFilter(key, value)
 
         try:

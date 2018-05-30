@@ -1,9 +1,5 @@
 from flask_restful import reqparse
 
-queryParser = reqparse.RequestParser()
-queryParser.add_argument('client', type=str, location='args')
-queryParser.add_argument('session', type=str, location='args')
-
 optsParser = reqparse.RequestParser()
 optsParser.add_argument('reverse', type=bool, location='args')
 
@@ -15,10 +11,6 @@ class EsOptions(object):
         self.matches = {}
         self.filters = {}
         self.setPaging()
-
-        params = queryParser.parse_args()
-        for key, value in params.items():
-            self.addQuery(key, value)
 
         reverse = optsParser.parse_args()['reverse']
         self.setDefaultSorting(reverse)
@@ -51,11 +43,10 @@ class EsOptions(object):
 
     def addFilter(self, key, value: str):
         if not value is None:
-            type = 'must_not' if value.startswith('!') else 'must'
+            type = 'must_not' if value.startswith('!') else 'filter'  # 'must'
             self.__addKeyIfNotExists__(self.filters, type)
             self.__addKeyIfNotExists__(self.filters[type], 'match')
             self.filters[type]['match'][key] = value.replace('!', '')
-
 
     def get(self):
         if self.matches:
