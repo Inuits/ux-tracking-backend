@@ -1,31 +1,13 @@
-from flask_restful import reqparse
-
-optsParser = reqparse.RequestParser()
-optsParser.add_argument('reverse', type=bool, location='args')
-
-
 class EsOptions(object):
 
     def __init__(self):
         self.esOpts = {}
         self.matches = {}
-        self.filters = {
-            'include': {},
-            'exclude': {}
-        }
-        self.setPaging()
+        self.filters = {'include': {}, 'exclude': {}}
 
-        reverse = optsParser.parse_args()['reverse']
-        self.setDefaultSorting(reverse)
-
-    def setPaging(self):
-        paging = reqparse.RequestParser()
-        paging.add_argument('limit', type=int, location='args')
-        paging.add_argument('from', type=int, location='args')
-
-        args = paging.parse_args()
-        self.esOpts['size'] = args['limit'] if not args['limit'] is None else 100
-        self.esOpts['from'] = args['from'] if not args['from'] is None else 0
+    def setPaging(self, size, fromval=0):
+        self.esOpts['size'] = size
+        self.esOpts['from'] = fromval
 
     def setSorting(self, sortingmethod):
         self.esOpts['sort'] = sortingmethod
@@ -61,7 +43,7 @@ class EsOptions(object):
             self.__addKeyIfNotExists__(self.esOpts, 'query')
             self.esOpts['query']['match'] = self.matches
 
-        if self.filters:
+        if self.filters['include'] or self.filters['exclude']:
             self.__addKeyIfNotExists__(self.esOpts, 'query')
             self.esOpts['query']['bool'] = {'must': [], 'must_not': []}
             self.esOpts['query']['bool']['must'].append({'bool': {'should': []}})

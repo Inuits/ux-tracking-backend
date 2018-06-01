@@ -1,9 +1,9 @@
 import json
 
 from flask_jwt_extended import jwt_required
-from flask_restful import Resource, reqparse, fields, http_status_message
+from flask_restful import reqparse, fields, http_status_message
 
-from common.es_options import EsOptions
+from resources.ux_resource import UxResource
 
 error_fields = {
     'error': fields.String,
@@ -24,17 +24,16 @@ post_parser.add_argument('actions', type=str)
 post_parser.add_argument('timestamp', type=int)
 
 
-class Error(Resource):
+class Error(UxResource):
     def __init__(self, **kwargs):
+        super().__init__()
         self.es = kwargs['es']
 
     @jwt_required
     def get(self):
 
-        esOpts = EsOptions()
-
         try:
-            errors = self.es.search('errors', 'error', esOpts.get())
+            errors = self.es.search('errors', 'error', self.esOpts.get())
 
         except:
             errors = []

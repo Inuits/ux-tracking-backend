@@ -1,8 +1,8 @@
 from flask import json
 from flask_jwt_extended import jwt_required
-from flask_restful import Resource, reqparse, http_status_message
+from flask_restful import reqparse, http_status_message
 
-from common.es_options import EsOptions
+from resources.ux_resource import UxResource
 
 parser = reqparse.RequestParser()
 parser.add_argument('actions', type=str)
@@ -19,10 +19,10 @@ filterParser.add_argument('type', type=str)
 filterParser.add_argument('value', type=str)
 
 
-class Action(Resource):
+class Action(UxResource):
     def __init__(self, **kwargs):
+        super().__init__()
         self.es = kwargs['es']
-        self.esOpts = EsOptions()
 
     @jwt_required
     def get(self):
