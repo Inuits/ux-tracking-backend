@@ -4,3 +4,4 @@ Flask-JWT-Extended==3.8.2
 Flask-YAMLConfig==0.0.3
 elasticsearch==6.2.0
 pyOpenSSL==18.0.0
+pytest==3.6.0
