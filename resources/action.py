@@ -1,6 +1,7 @@
 from flask import json
 from flask_jwt_extended import jwt_required
 from flask_restful import reqparse, http_status_message
+from rest_framework import status
 
 from resources.ux_resource import UxResource
 
@@ -35,7 +36,7 @@ class Action(UxResource):
         except:
             actions = []
 
-        return actions['hits'] if 'hits' in actions else []
+        return actions('hits') if 'hits' in actions else [], status.HTTP_200_OK
 
     @jwt_required
     def post(self):
@@ -45,4 +46,4 @@ class Action(UxResource):
         for action in actions:
             self.es.index('actions', 'action', action)
 
-        return http_status_message(200)
+        return {}, status.HTTP_201_CREATED

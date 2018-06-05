@@ -2,6 +2,7 @@ import json
 
 from flask_jwt_extended import jwt_required
 from flask_restful import reqparse, fields, http_status_message
+from rest_framework import status
 
 from resources.ux_resource import UxResource
 
@@ -31,14 +32,16 @@ class Error(UxResource):
 
     @jwt_required
     def get(self):
+        statusCode = status.HTTP_200_OK
 
         try:
             errors = self.es.search('errors', 'error', self.esOpts.get())
 
         except:
             errors = []
+            statusCode = status.HTTP_204_NO_CONTENT
 
-        return errors['hits'] if 'hits' in errors else []
+        return errors['hits'] if 'hits' in errors else [], statusCode
 
     @jwt_required
     def post(self):
@@ -53,4 +56,4 @@ class Error(UxResource):
             action['error_id'] = error['_id']
             self.es.index('actions', 'action', action)
 
-        return http_status_message(200)
+        return {}, status.HTTP_201_CREATED

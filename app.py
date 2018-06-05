@@ -1,28 +1,22 @@
-import logging
-
 from elasticsearch import Elasticsearch
 from flask import Flask, Blueprint
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
-from resources.actions.action import Action
+from resources.action import Action
 from resources.auth import Auth
 from resources.error import Error
 
-# Logging TODO remove
-logging.basicConfig(filename='debug.log',
-                    filemode='w',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
-
 # app initializion
 app = Flask(__name__)
+
 CORS(app, resources={r"/*": {"origins": "*"}}, support_credentials=True, automatic_options=True,
      expose_headers=['Authorization'])
+
 app.config['CORS_HEADERS'] = 'Content-Type'
 api_bp = Blueprint('api', __name__)
+
 api = Api(api_bp)
 es = Elasticsearch()
 

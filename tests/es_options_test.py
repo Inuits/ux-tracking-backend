@@ -65,6 +65,15 @@ class EsOptionsTest(unittest.TestCase):
         self.assertEqual(1, len(options['query']['bool']['must_not']))
         self.assertEqual('req', options['query']['bool']['must_not'][0]['term']['method'])
 
+    def testOptionsFilterExcludeMultiple(self):
+        self.options.addFilter('method', '!req,!click')
+
+        options = self.options.get()
+        self.assertIn('must_not', options['query']['bool'])
+        self.assertEqual(2, len(options['query']['bool']['must_not']))
+        self.assertEqual('req', options['query']['bool']['must_not'][0]['term']['method'])
+        self.assertEqual('click', options['query']['bool']['must_not'][1]['term']['method'])
+
     def testOptionsFilterIncludeAndExcludeForSameTerm(self):
         self.options.addFilter('method', 'req,!click')
 
