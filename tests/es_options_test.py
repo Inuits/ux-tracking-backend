@@ -110,5 +110,8 @@ class EsOptionsTest(unittest.TestCase):
         self.assertEqual('admin', options['query']['bool']['must_not'][0]['term']['session'])
 
 
-if __name__ == '__main__':
-    unittest.main()
+    def testOptionsFiltersIncludeWildCard(self):
+        self.options.addFilter('session', 'c7990*')
+        options = self.options.get()
+
+        self.assertEqual('c7990*', options['query']['bool']['must'][1]['wildcard']['session'])
