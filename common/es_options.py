@@ -40,20 +40,29 @@ class EsOptions(object):
             self.esOpts['query']['bool']['must'].append({'bool': {'should': []}})
 
             for key, value in self.filters['include'].items():
-                if len(value) == 1:
-                    self.esOpts['query']['bool']['must'].append({'term': {key: value[0]}})
-                else:
-                    for item in value:
-                        self.esOpts['query']['bool']['must'][0]['bool']['should'].append({'term': {key: item}})
+                self.__addFilter__('must', key, value)
 
             for key, value in self.filters['exclude'].items():
-                if len(value) == 1:
-                    self.esOpts['query']['bool']['must_not'].append({'term': {key: value[0]}})
-                else:
-                    for item in value:
-                        self.esOpts['query']['bool']['must_not'].append({'term': {key: item}})
+                self.__addFilter__('must_not', key, value)
 
         return self.esOpts
+
+    def __addFilter__(self, type, key, value):
+        if len(value) == 1:
+            self.esOpts['query']['bool'][type].append(self.__getFilterTerm__(key, value[0]))
+            return
+
+        for item in value:
+            if type is 'must':
+                self.esOpts['query']['bool'][type][0]['bool']['should'].append(self.__getFilterTerm__(key, item))
+            else:
+                self.esOpts['query']['bool'][type].append(self.__getFilterTerm__(key, item))
+
+    def __getFilterTerm__(self, key, value):
+        if '*' in value:
+            return {'wildcard': {key: value}}
+        else:
+            return {'term': {key: value}}
 
     def __addKeyIfNotExists__(self, dict: dict, key):
         if not key in dict:

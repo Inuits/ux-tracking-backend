@@ -36,7 +36,7 @@ class Action(UxResource):
         except:
             actions = []
 
-        return actions('hits') if 'hits' in actions else [], status.HTTP_200_OK
+        return actions['hits'] if 'hits' in actions else [], status.HTTP_200_OK
 
     @jwt_required
     def post(self):

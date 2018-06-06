@@ -20,8 +20,26 @@ api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 es = Elasticsearch()
 
-es.indices.create('errors', ignore=400)
-es.indices.create('actions', ignore=400)
+es.indices.create('errors', ignore=400, body={
+    "analysis": {
+        "analyzer": {
+            "default": {
+                "tokenizer": "whitespace",
+                "filter": ["lowercase"]
+            }
+        }
+    }
+})
+es.indices.create('actions', ignore=400, body={
+    "analysis": {
+        "analyzer": {
+            "default": {
+                "tokenizer": "whitespace",
+                "filter": ["lowercase"]
+            }
+        }
+    }
+})
 
 # JWT
 app.config['JWT_SECRET_KEY'] = 'SUPERsecretAPPkeyFORjqueryLOGGER*'
