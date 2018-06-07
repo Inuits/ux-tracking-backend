@@ -1,6 +1,6 @@
 import unittest
 
-from common.es_options import EsOptions
+from app.common.es_options import EsOptions
 
 
 class EsOptionsTest(unittest.TestCase):

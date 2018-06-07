@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 
-from common.es_options import EsOptions
+from app.common.es_options import EsOptions
 
 optsParser = reqparse.RequestParser()
 optsParser.add_argument('reverse', type=bool, location='args')

@@ -1,9 +1,9 @@
 from flask import json
 from flask_jwt_extended import jwt_required
-from flask_restful import reqparse, http_status_message
+from flask_restful import reqparse
 from rest_framework import status
 
-from resources.ux_resource import UxResource
+from app.resources.ux_resource import UxResource
 
 parser = reqparse.RequestParser()
 parser.add_argument('actions', type=str)

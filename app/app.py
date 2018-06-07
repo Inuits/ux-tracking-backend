@@ -4,11 +4,12 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
-from resources.action import Action
-from resources.auth import Auth
-from resources.error import Error
 
 # app initializion
+from app.resources.action import Action
+from app.resources.auth import Auth
+from app.resources.error import Error
+
 app = Flask(__name__)
 
 CORS(app, resources={r"/*": {"origins": "*"}}, support_credentials=True, automatic_options=True,

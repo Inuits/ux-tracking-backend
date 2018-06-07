@@ -1,10 +1,10 @@
 import json
 
 from flask_jwt_extended import jwt_required
-from flask_restful import reqparse, fields, http_status_message
+from flask_restful import reqparse, fields
 from rest_framework import status
 
-from resources.ux_resource import UxResource
+from app.resources.ux_resource import UxResource
 
 error_fields = {
     'error': fields.String,
@@ -23,6 +23,7 @@ post_parser.add_argument('position', type=str)
 post_parser.add_argument('stack', type=str)
 post_parser.add_argument('actions', type=str)
 post_parser.add_argument('timestamp', type=int)
+
 
 
 class Error(UxResource):
