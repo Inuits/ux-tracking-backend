@@ -1,10 +1,6 @@
 import unittest
-from pprint import pprint
 
-from flask import json
-from flask_jwt_extended import create_access_token
-
-from app import app
+from app.app import app
 
 
 class IntegrationCase(unittest.TestCase):
@@ -18,7 +14,7 @@ class IntegrationCase(unittest.TestCase):
         self.client = None
 
     def loadToken(self):
-        resp =  self.client.post('/auth', data={'name': 'matty', 'key': 'debie'})
+        resp =  self.client.post('/auth', data={'name': 'sportoffice', 'key': 'sportoase'})
         self.token = resp.get_json()['access_token']
 
     def getAuthHeader(self):

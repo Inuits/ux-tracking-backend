@@ -13,7 +13,7 @@ class AuthTest(IntegrationCase):
         self.assertEqual(405, resp.status_code)  # 405: Method Not Allowed
 
     def testCredentials(self):
-        resp = self.client.post('/auth', data=dict(name='matty', key='debie'))
+        resp = self.client.post('/auth', data=dict(name='sportoffice', key='sportoase'))
 
         self.assertEqual(200, resp.status_code)
 

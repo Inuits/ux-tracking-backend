@@ -6,11 +6,10 @@ from rest_framework import status
 from app.resources.ux_resource import UxResource
 
 parser = reqparse.RequestParser()
-parser.add_argument('actions', type=str)
+parser.add_argument('actions', type=str, required=True)
 
 filterParser = reqparse.RequestParser()
 filterParser.add_argument('client', type=str)
-filterParser.add_argument('error_id', type=str)
 filterParser.add_argument('id', type=str)
 filterParser.add_argument('method', type=str)
 filterParser.add_argument('path', type=str)
