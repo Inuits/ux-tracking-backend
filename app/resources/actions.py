@@ -17,9 +17,10 @@ filterParser.add_argument('position', type=str)
 filterParser.add_argument('session', type=str)
 filterParser.add_argument('type', type=str)
 filterParser.add_argument('value', type=str)
+filterParser.add_argument('timestamp', type=str)
 
 
-class Action(UxResource):
+class Actions(UxResource):
     def __init__(self, **kwargs):
         super().__init__()
         self.es = kwargs['es']
@@ -33,7 +34,7 @@ class Action(UxResource):
             actions = self.es.search('actions', 'action', self.esOpts.get())
 
         except:
-            actions = []
+            return [], status.HTTP_204_NO_CONTENT
 
         return actions['hits'] if 'hits' in actions else [], status.HTTP_200_OK
 

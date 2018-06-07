@@ -61,6 +61,9 @@ class EsOptions(object):
     def __getFilterTerm__(self, key, value):
         if '*' in value:
             return {'wildcard': {key: value}}
+        elif value[0] in ['<', '>']:
+            operator = 'lt' if value[0] is '<' else 'gt'
+            return {'range': {key: {operator: value[1:]}}}
         else:
             return {'term': {key: value}}
 

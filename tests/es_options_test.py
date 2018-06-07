@@ -115,3 +115,9 @@ class EsOptionsTest(unittest.TestCase):
         options = self.options.get()
 
         self.assertEqual('c7990*', options['query']['bool']['must'][1]['wildcard']['session'])
+
+    def testOptionsFiltersRange(self):
+        self.options.addFilter('timestamp', '<120')
+        options = self.options.get()
+
+        self.assertEqual('120', options['query']['bool']['must'][1]['range']['timestamp']['lt'])

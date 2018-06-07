@@ -4,11 +4,10 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
-
 # app initializion
-from app.resources.action import Action
+from app.resources.actions import Actions
 from app.resources.auth import Auth
-from app.resources.error import Error
+from app.resources.errors import Errors
 
 app = Flask(__name__)
 
@@ -48,8 +47,8 @@ jwt = JWTManager(app)
 
 # create the routes
 api.add_resource(Auth, '/auth')
-api.add_resource(Error, '/error', resource_class_kwargs={'es': es})
-api.add_resource(Action, '/action', resource_class_kwargs={'es': es})
+api.add_resource(Errors, '/error', '/error/<error_id>', resource_class_kwargs={'es': es})
+api.add_resource(Actions, '/action', resource_class_kwargs={'es': es})
 
 # register blueprint
 app.register_blueprint(api_bp)

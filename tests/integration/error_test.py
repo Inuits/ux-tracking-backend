@@ -24,7 +24,6 @@ class ErrorTest(IntegrationCase):
             'source': '/source.ts',
             'position': '12,34',
             'stack': 'stacktracee',
-            'actions': {},
             'timestamp': 1123454656
         })
 
@@ -40,11 +39,18 @@ class ErrorTest(IntegrationCase):
             'source': '/source.ts',
             'position': '12,34',
             'stack': 'stacktracee',
-            'actions': '[{ "client": "hakka", "method": "GET", "path": "/pos.html", "position": "122341,23424", '
-                       '"session": "info@hakka.eu", "type": "REQ", "value": "lol" }]',
             'timestamp': 987654321
         })
 
         assert status.is_success(resp.status_code)
         assert resp.status_code is status.HTTP_201_CREATED
 
+    def testGetErrorById(self):
+        resp = self.client.get('/error', headers=self.getAuthHeader())
+        error = resp.get_json()['hits'][0]
+
+        resp = self.client.get('/error/' + error['_id'], headers=self.getAuthHeader())
+
+        assert status.is_success(resp.status_code)
+
+        self.assertEqual(resp.get_json()['hits'][0]['_id'], error['_id'])

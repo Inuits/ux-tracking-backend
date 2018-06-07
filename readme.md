@@ -178,26 +178,20 @@ pytest --cov=.
 pytest --cov=. --cov-report=html
 ```
 
-Our coverage as of commit `77f53aee2e174e32e8a1d198bdfe2db5eaa93a72` (6-6-2018)
+### Test Coverage
 ```
-Name                               Stmts   Miss  Cover
-------------------------------------------------------
-app.py                                22      0   100%
-common/__init__.py                     0      0   100%
-common/es_options.py                  47      0   100%
-resources/__init__.py                  0      0   100%
-resources/action.py                   35      2    94%
-resources/auth.py                     20      0   100%
-resources/error.py                    36      0   100%
-resources/ux_resource.py              14      0   100%
-run.py                                 7      7     0%
-tests/__init__.py                      0      0   100%
-tests/es_options_test.py              85      0   100%
-tests/integration/__init__.py          0      0   100%
-tests/integration/action_test.py      10      0   100%
-tests/integration/auth_test.py        15      0   100%
-tests/integration/error_test.py       14      0   100%
-tests/integration_case.py             18      0   100%
-------------------------------------------------------
-TOTAL                                323      9    97%
+Name                           Stmts   Miss  Cover
+--------------------------------------------------
+app/__init__.py                    0      0   100%
+app/app.py                        22      0   100%
+app/common/__init__.py             0      0   100%
+app/common/es_options.py          50      0   100%
+app/resources/__init__.py          0      0   100%
+app/resources/actions.py          35      2    94%
+app/resources/auth.py             20      0   100%
+app/resources/errors.py           31      2    94%
+app/resources/ux_resource.py      14      0   100%
+--------------------------------------------------
+TOTAL                            172      4    98%
+
 ```

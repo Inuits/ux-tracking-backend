@@ -21,21 +21,23 @@ post_parser.add_argument('stack', type=str)
 post_parser.add_argument('timestamp', type=int)
 
 
-class Error(UxResource):
+class Errors(UxResource):
     def __init__(self, **kwargs):
         super().__init__()
         self.es = kwargs['es']
 
     @jwt_required
-    def get(self):
+    def get(self, error_id=None):
         statusCode = status.HTTP_200_OK
+
+        if error_id is not None:
+            self.esOpts.addFilter('_id', error_id)
 
         try:
             errors = self.es.search('errors', 'error', self.esOpts.get())
 
         except:
-            errors = []
-            statusCode = status.HTTP_204_NO_CONTENT
+            return [], status.HTTP_204_NO_CONTENT
 
         return errors['hits'] if 'hits' in errors else [], statusCode
 
