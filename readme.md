@@ -121,13 +121,13 @@ Ux Tracking backend has some dependencies.
 
 | Dependency | Version | Description |
 | --         | --      | --          |
-| flask | 1.0 | Basic Flask Framework|
-| flask-restful | 0.3.6 | Restful expansion of flask framework |
-| Flask-JWT-Extended | 3.8.2 | JWT for Flask |
+| [flask](http://flask.pocoo.org/) | 1.0 | Basic Flask Framework|
+| [flask-restful](https://github.com/flask-restful/flask-restful/) | 0.3.6 | Restful expansion of flask framework |
+| [Flask-JWT-Extended](http://flask-jwt-extended.readthedocs.io/en/latest/) | 3.8.2 | JWT for Flask |
 | ~~Flask-YAMLConfig~~ | 0.0.3 | Not needed anymore ? |
-| elasticsearch | 6.2.0 | Elasticsearch Bridge |
-| pyOpenSSL | 18.0.0 | SSL for serving over https |
-| pytest | 3.6.0 | For testing |
+| [elasticsearch](https://elasticsearch-py.readthedocs.io/en/master/) | 6.2.0 | Elasticsearch Bridge |
+| [pyOpenSSL](https://pyopenssl.org/en/stable/) | 18.0.0 | SSL for serving over https |
+| [pytest](https://docs.pytest.org/en/latest/) | 3.6.0 | For testing |
 
 These requirements are stored in requirements.txt, an easy install of the dependencies should be as follows:
 
