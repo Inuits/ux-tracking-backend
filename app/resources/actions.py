@@ -43,7 +43,8 @@ class Actions(UxResource):
         args = parser.parse_args()
         actions = json.loads(args['actions'])
 
-        for action in actions:
-            self.es.index('actions', 'action', action)
+        if actions is not None:
+            for action in actions:
+                self.es.index('actions', 'action', action)
 
         return {}, status.HTTP_201_CREATED
