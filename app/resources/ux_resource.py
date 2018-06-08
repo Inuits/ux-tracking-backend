@@ -14,7 +14,7 @@ class UxResource(Resource):
     def __init__(self):
         self.esOpts = EsOptions()
         args = optsParser.parse_args()
-        self.esOpts.setDefaultSorting(args['reverse'] is 'true')
+        self.esOpts.setDefaultSorting(args['reverse'] == 'true')
 
         args = paging.parse_args()
         self.esOpts.setPaging(args['limit'] if not args['limit'] is None else 100,
