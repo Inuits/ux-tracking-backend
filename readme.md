@@ -1,5 +1,22 @@
 # UX Tracking Backend
 
+
+## Running the backend
+If you want to package the script yourself, simply install pyinstaller by running
+```
+pip install pyinstaller
+```
+After that, execute the `package.sh` script and your standalone should appear.  
+To run it: 
+```bash
+dist/run
+```
+or move the executable to a place of choice.
+
+Otherwhise, use the standalone provided by us in the future.
+
+
+## About
 The Ux Tracking backend is written in [Flask-Restful](https://github.com/flask-restful/flask-restful/). This is a python based micro-framework.
 
 There are 3 endpoints available in this API:
