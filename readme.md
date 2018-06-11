@@ -1,6 +1,5 @@
+[![Release](https://img.shields.io/github/release/inuits/ux-tracking-backend/all.svg)](https://github.com/inuits/ux-tracking-backend/releases)
 # UX Tracking Backend
-
-
 ## Running the backend
 If you want to package the script yourself, simply install pyinstaller by running
 ```
