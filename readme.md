@@ -1,6 +1,15 @@
 [![Release](https://img.shields.io/github/release/inuits/ux-tracking-backend/all.svg)](https://github.com/inuits/ux-tracking-backend/releases)
+
 # UX Tracking Backend
 ## Running the backend
+### Releases
+We provide releases of stable builds (currently pre-release). Simply download them and run as follows
+```bash
+./ux-tracking-backend
+```
+This script runs on localhost:5000 by default and uses ssl.
+
+### Package yourself
 If you want to package the script yourself, simply install pyinstaller by running
 ```
 pip install pyinstaller
@@ -8,12 +17,25 @@ pip install pyinstaller
 After that, execute the `package.sh` script and your standalone should appear.  
 To run it: 
 ```bash
-dist/run
+dist/ux-tracking-backend
 ```
 or move the executable to a place of choice.
 
-Otherwhise, use the standalone provided by us in the future.
+## SSL
+Ux-tracking-backend tries to run on SSL. In order to do so, it needs some keys.
+To generate self-signed keys:
+```bash
+openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
+```
 
+Place them in the same directory as the executable under a folder named `keys`.
+```
+.
+├── keys
+│   ├── cert.pem
+│   └── key.pem
+└── ux-tracking-backend
+```
 
 ## About
 The Ux Tracking backend is written in [Flask-Restful](https://github.com/flask-restful/flask-restful/). This is a python based micro-framework.
