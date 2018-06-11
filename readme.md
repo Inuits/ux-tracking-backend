@@ -1,5 +1,3 @@
-[![Release](https://img.shields.io/github/release/inuits/ux-tracking-backend/all.svg)](https://github.com/inuits/ux-tracking-backend/releases)
-
 # UX Tracking Backend
 Ux Tracking Backend is Flask-Restful python API for tracking a users behaviour on an application. It's one component out of three needed for the Ux-tracker to work.
 - Backend
@@ -7,10 +5,12 @@ Ux Tracking Backend is Flask-Restful python API for tracking a users behaviour o
 - [Library](https://github.com/inuits/ux-tracking-library)
 
 ## Quickstart
-### Releases
-We provide releases of stable builds (currently pre-release). Simply download them and run as follows
+You can clone the repo, install the requirements using `requirements.txt` and run it with `python run.py`
 ```bash
-./ux-tracking-backend
+git clone https://github.com/inuits/ux-tracking-backend.git
+cd ux-tracking-backend
+pip install -r requirements.txt
+python run.py
 ```
 
 ### SSL
