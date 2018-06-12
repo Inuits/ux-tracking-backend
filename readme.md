@@ -5,13 +5,35 @@ Ux Tracking Backend is Flask-Restful python API for tracking a users behaviour o
 - [Library](https://github.com/inuits/ux-tracking-library)
 
 ## Quickstart
-You can clone the repo, install the requirements using `requirements.txt` and run it with `python run.py`
+You can clone the repo, install the requirements using `requirements.txt` 
 ```bash
 git clone https://github.com/inuits/ux-tracking-backend.git
 cd ux-tracking-backend
 pip install -r requirements.txt
+```
+
+Copy the dist config from `config/config.yml.dist` to `config/config.yml` and edit according to your settings.
+```yaml
+elasticsearch:
+  host: localhost
+  port: 9200
+
+keys:
+  - name: applicationOne
+    key: keyOne
+  - name: applicationTwo
+    key: keyTwo
+
+jwt_secret_key: your_jwt_secret_key_here
+```
+
+finally run it with 
+```bash
 python run.py
 ```
+
+
+
 
 ### SSL
 Ux-tracking-backend tries to run on SSL. In order to do so, it needs some keys.

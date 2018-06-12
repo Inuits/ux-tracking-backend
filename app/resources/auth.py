@@ -14,19 +14,14 @@ class Application(object):
         self.key = key
 
 
-# TODO: refactor this to be config managed or behind KeyCloack
-apps = [
-    Application(1, 'hakka', 'hakkakey'),
-    Application(2, 'sportoffice', 'sportoase'),
-]
-
-appsMap = {a.name: a for a in apps}
-
-
 class Auth(Resource):
+    def __init__(self, **kwargs):
+        apps = [Application(i, a['name'], a['key']) for i, a in enumerate(kwargs['apps'], start=1)]
+        self.appsMap = {a.name: a for a in apps}
+
     def post(self):
         args = post_parser.parse_args()
-        app = appsMap.get(args.name, None)
+        app = self.appsMap.get(args.name, None)
 
         if (app is None) or (app.key != args.key):
             return {}, status.HTTP_401_UNAUTHORIZED

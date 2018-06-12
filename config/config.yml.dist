@@ -1,0 +1,11 @@
+elasticsearch:
+  host: localhost
+  port: 9200
+
+keys:
+  - name: applicationOne
+    key: keyOne
+  - name: applicationTwo
+    key: keyTwo
+
+jwt_secret_key: your_jwt_secret_key_here
